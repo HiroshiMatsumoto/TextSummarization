@@ -81,11 +81,12 @@ def L(S, V, alpha) -> float:
 
 def R(S):
     # Diversity Rewards
+    # not implemented
     return 0
 
 
 def F(S, V, alpha, lmbd):
-    return L(S, V, alpha)  # + lmbd * R(S)
+    return L(S, V, alpha) + lmbd * R(S)
 
 
 def main():
@@ -93,25 +94,21 @@ def main():
     doc = docs[list(docs.keys())[0]]
     orig_doc = orig_docs[list(docs.keys())[0]]
 
-
-    # subset = set(itr.combinations(range(set_size), subset_size))
-    # print(subset)
+    # V: ground set
     V = doc
+    # S: subset
     S = dict()
 
-    # S: subset
-    # V: all
     # S \in argmax F(S) s.t sum
 
     # parameters
     constrain_size = 5
     alpha = 0.5
     lmbd = 0.1
-
-    # Greedy Search
     cost = 1
     budget = 5
-    # summary = dict()
+    
+    # Greedy Search
     while sum(cost for i in S) < budget:
         # print("S: ", len(S))
         # create tmp-subset
@@ -128,7 +125,6 @@ def main():
                 max_score = score
                 max_i = i
         S[max_i] = V[max_i]
-        print("arg_max:", max_i, ":", orig_doc[max_i])
 
     print("summary")
     for i in S:
@@ -138,7 +134,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
-
-
